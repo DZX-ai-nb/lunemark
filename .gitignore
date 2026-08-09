@@ -1,0 +1,8 @@
+_build/
+.moon/
+.vscode/
+.idea/
+*.log
+*.tmp
+work/
+outputs/
