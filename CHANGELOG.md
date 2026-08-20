@@ -1,5 +1,21 @@
 # Changelog
 
+## 0.2.0 - 2026-08-20
+
+### Changed
+
+- 主定位从验收打分器升级为 MoonBit 选题原创性星图。
+- `moon.mod` 描述与关键词改为 originality、fingerprint、anti-collision。
+- README 和 mooncakes README 增加查重处理、功能转向、代码规模和原创性示例。
+
+### Added
+
+- `IdeaProfile`、`Archetype`、`SimilarityHit` 和 `OriginalityReport`。
+- 281 个内置项目原型，供 `closest_archetypes` 实际计算近邻相似度。
+- `analyze_originality`、`format_originality_report` 和 `originality_badge`。
+- `docs/ORIGINALITY.md`，记录发现相近项目及规避方案。
+- 原创性 API 测试和已知近重复检测测试。
+
 ## 0.1.0 - 2026-08-10
 
 ### Added

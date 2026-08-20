@@ -1,6 +1,6 @@
 # Release Checklist
 
-## 0.1.0 Planned Release
+## 0.2.0 Planned Release
 
 Before publishing to mooncakes.io:
 
@@ -40,8 +40,8 @@ moon publish
 10. Create and push the version tag:
 
 ```sh
-git tag v0.1.0
-git push origin v0.1.0
+git tag v0.2.0
+git push origin v0.2.0
 ```
 
 11. Add the mooncakes.io package URL to the README after publication.

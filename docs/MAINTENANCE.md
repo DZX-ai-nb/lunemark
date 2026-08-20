@@ -2,7 +2,7 @@
 
 ## Ownership Boundary
 
-Lunemark owns only the acceptance evidence model and deterministic report formatting. Integrations should stay in separate packages so the core remains easy to test.
+Lunemark owns the originality fingerprint model, built-in archetype atlas, deterministic report formatting, and the secondary acceptance evidence model. Integrations should stay in separate packages so the core remains easy to test.
 
 ## Versioning
 
@@ -12,7 +12,7 @@ Lunemark owns only the acceptance evidence model and deterministic report format
 
 ## Compatibility
 
-The signature depends on evidence order and weights. Any change to either should be called out in `CHANGELOG.md` and should update tests.
+`LMK-*` signatures depend on evidence order and weights. `ORBT-*` signatures depend on profile axes and novelty scoring. Any change to these inputs should be called out in `CHANGELOG.md` and should update tests.
 
 ## Issue Workflow
 

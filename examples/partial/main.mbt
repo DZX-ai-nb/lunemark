@@ -10,4 +10,7 @@ fn main {
   ]
   let report = @lunemark.audit("tiny-orbit", evidence)
   println(@lunemark.badge(report))
+  let idea = @lunemark.lunemark_profile()
+  let originality = @lunemark.analyze_originality(idea)
+  println(@lunemark.originality_badge(originality))
 }

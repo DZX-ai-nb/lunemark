@@ -3,7 +3,7 @@
 
 name = "username/lunemark"
 
-version = "0.1.0"
+version = "0.2.0"
 
 readme = "README.mbt.md"
 
@@ -11,8 +11,14 @@ repository = "https://github.com/your-name/lunemark"
 
 license = "Apache-2.0"
 
-keywords = [ "hackathon", "ci", "readme", "mooncakes", "audit" ]
+keywords = [
+  "hackathon",
+  "originality",
+  "fingerprint",
+  "mooncakes",
+  "anti-collision",
+]
 
 preferred_target = "wasm"
 
-description = "A MoonBit acceptance readiness capsule that turns project evidence into a deterministic score, gap list, and release signature."
+description = "A MoonBit originality atlas that fingerprints project ideas, detects nearby archetypes, and generates anti-collision signatures before release."

@@ -11,6 +11,9 @@
 
 ```sh
 moon fmt
+moon fmt --check
+moon check --deny-warn
+moon build
 moon test
 moon run cmd/main
 moon run examples/partial
@@ -18,12 +21,16 @@ moon run examples/partial
 
 ## Results
 
-- `moon test`: 5 tests, 5 passed, 0 failed.
-- `moon run cmd/main`: printed draft report and sealed release badge.
-- `moon run examples/partial`: printed compact blocked badge.
+- `moon test`: 8 tests, 8 passed, 0 failed.
+- `moon run cmd/main`: printed originality atlas report, draft readiness report, and sealed release badge.
+- `moon run examples/partial`: printed compact readiness badge and originality badge.
+- Effective MoonBit source scale: 5979 non-empty, non-comment lines after the originality atlas expansion.
 
 ## Covered Cases
 
+- Originality atlas returns five ranked nearest hits.
+- Known readiness guard shape is detected as a 100% close match.
+- Public originality API exposes an `ORBT-*` anti-collision badge.
 - Complete evidence reaches 100 and `Sealed`.
 - Draft evidence reports 48 and missing release work.
 - Duplicate evidence does not inflate the score.

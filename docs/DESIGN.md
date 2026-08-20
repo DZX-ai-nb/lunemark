@@ -2,7 +2,7 @@
 
 ## 目标
 
-Lunemark 的目标是提供一个小而清楚的 MoonBit 验收状态模型。它不猜测项目是否合格，而是把维护者确认过的证据项转换成可追踪报告。
+Lunemark 的目标是提供一个 MoonBit 选题原创性星图。它先把项目想法编码成多维功能指纹，再和内置原型库做近邻比较，输出原创性分数、防撞签名和改题建议。验收状态模型仍然保留，但作为发布准备度辅助，而不是主功能。
 
 ## 数据模型
 
@@ -12,6 +12,46 @@ Lunemark 的目标是提供一个小而清楚的 MoonBit 验收状态模型。�
 - `Readiness`：`Blocked`、`Warming`、`Ready`、`Sealed`。
 - `Finding`：缺失证据项、权重、标签和修复动作。
 - `Report`：总分、已得分、百分比分、状态、缺口和签名。
+
+原创性类型位于 `lunemark_originality.mbt`：
+
+- `IdeaProfile`：项目选题的 12 轴功能指纹。
+- `Archetype`：一个内置原型库条目。
+- `SimilarityHit`：最近邻匹配结果。
+- `OriginalityReport`：原创性分数、最近原型、差异化建议、改题提示和 `ORBT-*` 签名。
+
+原型库位于 `lunemark_catalog.mbt`，当前包含 281 个条目。`closest_archetypes` 会遍历整个原型库、计算距离、排序并截取前 N 个结果。
+
+## 原创性算法
+
+每个选题和原型都有 12 个 1~10 的轴：
+
+- namespace
+- runtime
+- docs
+- ci
+- release
+- originality
+- maintenance
+- data
+- interactive
+- security
+- portability
+- community
+
+距离是 12 轴绝对差之和。相似度使用严格近重复阈值：
+
+```text
+similarity = clamp(100 - distance * 100 / 25, 0, 100)
+```
+
+这个阈值故意偏严格：只有非常接近的向量才被视为撞题风险，宽泛领域相邻只作为差异化参考。
+
+Lunemark 0.2.0 自查结果：
+
+- novelty: 81/100
+- signature: `ORBT-81-5rz`
+- nearest internal archetype: 28%
 
 ## 权重设计
 
