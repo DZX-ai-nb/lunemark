@@ -1,52 +1,59 @@
-# Originality Check
+# Originality Notes
 
-Date: 2026-08-20
+Date: 2026-08-21
 
-## Search Scope
+## Scope
 
-Manual online search covered:
+This file records the public topic scan used to keep Lunemark away from nearby MoonBit hackathon projects. The README intentionally leads with Lunemark's own idea-fingerprint model instead of making these comparisons the product story.
+
+Searches covered:
 
 - `Lunemark MoonBit`
+- `Lunemark Originality Atlas`
+- `MoonBit originality atlas`
+- `MoonBit project idea fingerprint`
 - `site:mooncakes.io Lunemark`
-- `site:mooncakes.io moonbit-submit-guard`
-- `Audit MoonBit project readiness for hackathon submission review`
-- `MoonBit novelty fingerprint project idea`
-- `MoonBit project differentiation`
+- `site:mooncakes.io MoonBit originality`
+- selected names and themes from the reviewer-feedback screenshots
 
-## Similar Project Found
+## Nearby Public Projects
 
-The search found `JJ-ai-nb/moonbit-submit-guard` on mooncakes.io:
+The public scan found several Mooncakes packages in the release-material and final-showcase family:
 
-- <https://mooncakes.io/docs/JJ-ai-nb/moonbit-submit-guard>
+- [`JJ-ai-nb/moonbit-submit-guard`](https://mooncakes.io/docs/JJ-ai-nb/moonbit-submit-guard): repository readiness and command-list style project.
+- [`NBB2006/docproof-harbor`](https://mooncakes.io/docs/NBB2006/docproof-harbor): README example, provenance, license, and release-material toolkit.
+- [`SHX-ai-nb/capsuletrace-upload`](https://mooncakes.io/docs/SHX-ai-nb/capsuletrace-upload): capability-boundary and final-showcase trace validator.
 
-Its public description is a MoonBit hackathon submission readiness auditor, with APIs such as file snapshots, findings, status, project profile, and `audit_project`.
+The reviewer-feedback screenshots also pointed to the same general cluster: package pre-release inspection, review-feedback verification, README/source proof, robot-policy work, and capsule-style trace records.
 
-Similarity risk:
+## Risk Removed
 
-- Previous Lunemark scope: acceptance readiness scoring and missing checklist items.
-- Similar package scope: submission readiness auditing for hackathon review.
-- Result: the previous scope was too close and should not remain the lead feature.
+Old Lunemark risk:
 
-## Pivot Applied
+- A launch milestone score was previously the first feature a reviewer saw.
+- Public names used evidence, finding, traceable history, and similar wording.
+- README examples were easy to mistake for another repository-readiness helper.
 
-Lunemark 0.2.0 now leads with an originality engine:
+Changes applied:
 
-- `IdeaProfile`: multi-axis project idea fingerprint.
-- `Archetype`: built-in comparison shape.
-- `archetype_catalog`: 281 internal reference archetypes.
-- `closest_archetypes`: nearest-neighbor similarity search.
-- `analyze_originality`: novelty score, closest hits, differentiators, rewrite prompt, and `ORBT-*` anti-collision signature.
-
-The acceptance scoring API remains as a secondary release-readiness helper, but it is no longer the main project topic.
+- Main feature is now `IdeaProfile` plus `analyze_originality`.
+- `archetype_catalog` provides 281 built-in comparison shapes.
+- `closest_archetypes` computes ranked nearest neighbors for idea fingerprints.
+- `ORBT-*` signatures identify a stable topic fingerprint.
+- Launch milestones remain as secondary project-status output.
+- Public launch API now uses `Milestone`, `MilestoneGap`, and `CommitHistory` instead of older evidence/finding/trace naming.
 
 ## Current Differentiation
 
-Lunemark now differs from a submission guard in four concrete ways:
+Lunemark is not a repository file scanner and does not parse a README, license file, CI log, or Git history. Its core data is a 12-axis idea profile and an internal archetype atlas.
 
-- It analyzes project ideas before implementation rather than auditing repository files after implementation.
-- It compares against a built-in archetype atlas instead of checking a fixed submission checklist.
-- It outputs anti-collision rewrite prompts and differentiators.
-- It treats future maintenance lanes as part of the originality report.
+Concrete boundaries:
+
+- Input: a project idea profile, not a filesystem snapshot.
+- Core operation: numeric idea-distance comparison, not a release-material rule list.
+- Output: originality score, closest archetypes, differentiators, rewrite prompt, and `ORBT-*` signature.
+- Secondary output: launch milestone score for README or issue comments.
+- Non-goal: legal license judgment or guaranteed global uniqueness.
 
 ## Current Self-Result
 
@@ -65,6 +72,6 @@ closest archetypes:
 
 No nearest internal archetype is above 30% similarity under the strict near-duplicate threshold.
 
-## Remaining Submission Note
+## Remaining Note
 
-This local check cannot prove that no private, unpublished, or later-created project is similar. Before final submission, repeat the same search against mooncakes.io and the public GitHub repository index, then update this file.
+This scan cannot prove that no private, unpublished, or later-created project is similar. Before final publication, repeat the search against mooncakes.io and public GitHub results, then update this file with exact dates and links.

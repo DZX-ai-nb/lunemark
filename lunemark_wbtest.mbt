@@ -1,6 +1,6 @@
 ///|
-test "complete evidence seals the report" {
-  let report = audit("complete", complete_evidence())
+test "complete milestones seal the report" {
+  let report = mark_launch("complete", complete_milestones())
   assert_true(report.score == 100)
   assert_true(report.earned_weight == 100)
   assert_true(report.level == Sealed)
@@ -9,28 +9,32 @@ test "complete evidence seals the report" {
 }
 
 ///|
-test "draft evidence lists missing release work" {
-  let report = audit("draft", draft_evidence())
+test "draft milestones list missing release work" {
+  let report = mark_launch("draft", draft_milestones())
   assert_true(report.score == 48)
   assert_true(report.level == Blocked)
   assert_true(report.missing.length() == 6)
-  assert_true(format_report(report).contains("CI workflow is configured"))
   assert_true(
-    format_report(report).contains("package is published to mooncakes.io"),
+    format_launch_report(report).contains("CI workflow is configured"),
+  )
+  assert_true(
+    format_launch_report(report).contains(
+      "package is published to mooncakes.io",
+    ),
   )
 }
 
 ///|
-test "duplicate evidence does not inflate score" {
-  let report = audit("duplicate", [MoonBitPrimary, MoonBitPrimary])
-  assert_true(report.earned_weight == evidence_weight(MoonBitPrimary))
+test "duplicate milestones do not inflate score" {
+  let report = mark_launch("duplicate", [MoonBitPrimary, MoonBitPrimary])
+  assert_true(report.earned_weight == milestone_weight(MoonBitPrimary))
   assert_true(report.score == 12)
 }
 
 ///|
 test "badge is compact and deterministic" {
-  let report = audit("complete", complete_evidence())
-  assert_true(badge(report).contains("Lunemark Sealed 100% LMK-100-"))
+  let report = mark_launch("complete", complete_milestones())
+  assert_true(launch_badge(report).contains("Lunemark Sealed 100% LMK-100-"))
 }
 
 ///|
@@ -43,12 +47,12 @@ test "originality atlas returns ranked hits and signature" {
 }
 
 ///|
-test "known readiness guard shape is detected as close" {
+test "known release planner shape is detected as close" {
   let profile = IdeaProfile::{
-    name: "readiness guard",
-    thesis: "audit MoonBit project readiness",
-    audience: "hackathon-submitters",
-    mechanism: "file-snapshot-auditing",
+    name: "release planner",
+    thesis: "summarize MoonBit project launch routes",
+    audience: "release-curators",
+    mechanism: "milestone-route-modeling",
     axis_namespace: 4,
     axis_runtime: 2,
     axis_docs: 7,

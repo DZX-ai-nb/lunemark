@@ -53,7 +53,7 @@ pub(all) struct SimilarityHit {
 } derive(Eq, Debug)
 
 ///|
-/// Output of the originality guardrail.
+/// Output of the originality boundary model.
 pub(all) struct OriginalityReport {
   idea : IdeaProfile
   novelty_score : Int
@@ -223,16 +223,10 @@ fn differentiators(
 ) -> Array[String] {
   let items = []
   if top_similarity >= 70 {
-    items.push(
-      "rename the public promise away from generic submission readiness",
-    )
-    items.push(
-      "show the multi-axis idea fingerprint before any acceptance checklist",
-    )
+    items.push("rename the public promise toward original idea fingerprints")
+    items.push("show the multi-axis idea fingerprint before release milestones")
   } else {
-    items.push(
-      "lead with originality analysis rather than repository file auditing",
-    )
+    items.push("lead with originality analysis and the atlas data model")
     items.push(
       "use the built-in archetype atlas as a reusable MoonBit data engine",
     )
@@ -260,7 +254,7 @@ fn rewrite_prompt(profile : IdeaProfile, top_similarity : Int) -> String {
   } else {
     "preserve " +
     profile.name +
-    " as an originality-first MoonBit planning kernel with acceptance as a secondary output"
+    " as an originality-first MoonBit planning kernel with launch milestones as a secondary output"
   }
 }
 

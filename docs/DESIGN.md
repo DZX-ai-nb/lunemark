@@ -2,16 +2,16 @@
 
 ## 目标
 
-Lunemark 的目标是提供一个 MoonBit 选题原创性星图。它先把项目想法编码成多维功能指纹，再和内置原型库做近邻比较，输出原创性分数、防撞签名和改题建议。验收状态模型仍然保留，但作为发布准备度辅助，而不是主功能。
+Lunemark 的目标是提供一个 MoonBit 选题原创性星图。它先把项目想法编码成多维功能指纹，再和内置原型库做近邻比较，输出原创性分数、防撞签名和改题建议。发布里程碑模型仍然保留，但作为辅助视图，而不是主功能。
 
 ## 数据模型
 
-核心类型位于 `lunemark.mbt`：
+发布里程碑类型位于 `lunemark.mbt`：
 
-- `Evidence`：12 个验收证据项。
-- `Readiness`：`Blocked`、`Warming`、`Ready`、`Sealed`。
-- `Finding`：缺失证据项、权重、标签和修复动作。
-- `Report`：总分、已得分、百分比分、状态、缺口和签名。
+- `Milestone`：12 个发布里程碑项。
+- `LaunchState`：`Blocked`、`Warming`、`Ready`、`Sealed`。
+- `MilestoneGap`：缺失里程碑、权重、标签和修复动作。
+- `LaunchReport`：总分、已得分、百分比分、状态、缺口和签名。
 
 原创性类型位于 `lunemark_originality.mbt`：
 
@@ -57,7 +57,7 @@ Lunemark 0.2.0 自查结果：
 
 总权重固定为 100，方便在 README、Issue 和 CI 中直接读取结果。
 
-| Evidence | Weight |
+| Milestone | Weight |
 | --- | ---: |
 | `MoonBitPrimary` | 12 |
 | `PublicRepository` | 8 |
@@ -68,7 +68,7 @@ Lunemark 0.2.0 自查结果：
 | `RunnableTests` | 10 |
 | `BuildPasses` | 12 |
 | `MooncakesRelease` | 8 |
-| `TraceableHistory` | 8 |
+| `CommitHistory` | 8 |
 | `BoundedScope` | 5 |
 | `LicenseClean` | 6 |
 
@@ -83,7 +83,7 @@ Lunemark 0.2.0 自查结果：
 
 ## 签名规则
 
-签名格式为 `LMK-<earned>-<token>`。`token` 来自证据位图、已得分和总分的确定性组合。同一组证据不受输入顺序或重复项影响，会得到相同签名。
+签名格式为 `LMK-<earned>-<token>`。`token` 来自里程碑位图、已得分和总分的确定性组合。同一组里程碑不受输入顺序或重复项影响，会得到相同签名。
 
 ## 非目标
 
@@ -97,8 +97,7 @@ Lunemark 0.2.0 自查结果：
 
 后续可以添加以下包或模块：
 
-- `scan/readme`：README 结构检查。
-- `scan/git`：提交记录和 tag 检查。
-- `scan/github`：Issue、PR 和 CI 状态检查。
-- `scan/mooncakes`：发布状态检查。
+- `index/mooncakes`：公开包索引导入。
+- `index/github`：公开项目摘要导入。
+- `atlas`：更细的原型分类和聚类导出。
 - `json`：机器可读报告输出。

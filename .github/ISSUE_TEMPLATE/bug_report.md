@@ -23,4 +23,4 @@ moon run cmd/main
 
 ## Notes
 
-Add MoonBit version and any relevant evidence list.
+Add MoonBit version and any relevant milestone list.

@@ -8,11 +8,11 @@ assignees: ""
 
 ## Problem
 
-What acceptance or maintenance problem should this solve?
+What originality or maintenance problem should this solve?
 
 ## Proposed Shape
 
-Is this a core model change, formatter change, or optional scanner?
+Is this a core model change, formatter change, or optional indexer?
 
 ## Non-goals
 

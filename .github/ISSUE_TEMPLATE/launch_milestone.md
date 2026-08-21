@@ -1,14 +1,14 @@
 ---
-name: Acceptance gap
-about: Track one missing MoonBit acceptance evidence item
+name: Launch milestone
+about: Track one missing MoonBit launch milestone
 title: "[gap] "
-labels: acceptance
+labels: milestone
 assignees: ""
 ---
 
-## Evidence Item
+## Milestone
 
-Which `Evidence` item is missing?
+Which `Milestone` item is missing?
 
 ## Current State
 
@@ -16,7 +16,7 @@ What exists today?
 
 ## Done When
 
-- [ ] The evidence exists in the public repository.
+- [ ] The milestone is visible in the public repository.
 - [ ] README or docs explain it.
 - [ ] CI or tests verify it when possible.
 - [ ] `moon test` still passes.

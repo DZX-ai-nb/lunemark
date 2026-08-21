@@ -1,6 +1,6 @@
 # Release Checklist
 
-## 0.2.0 Planned Release
+## 0.2.1 Planned Release
 
 Before publishing to mooncakes.io:
 
@@ -40,15 +40,15 @@ moon publish
 10. Create and push the version tag:
 
 ```sh
-git tag v0.2.0
-git push origin v0.2.0
+git tag v0.2.1
+git push origin v0.2.1
 ```
 
 11. Add the mooncakes.io package URL to the README after publication.
 
-## Artifact Evidence
+## Artifact Links
 
-Keep these links for final acceptance:
+Keep these links for the final project showcase:
 
 - Public repository URL
 - GitHub Actions run URL

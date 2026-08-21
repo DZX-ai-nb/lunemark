@@ -1,6 +1,6 @@
 ///|
-/// Evidence items that Lunemark expects before a MoonBit project is accepted.
-pub(all) enum Evidence {
+/// Launch milestones that Lunemark can summarize after the idea fingerprint.
+pub(all) enum Milestone {
   MoonBitPrimary
   PublicRepository
   CompleteReadme
@@ -10,14 +10,14 @@ pub(all) enum Evidence {
   RunnableTests
   BuildPasses
   MooncakesRelease
-  TraceableHistory
+  CommitHistory
   BoundedScope
   LicenseClean
 } derive(Eq, Debug)
 
 ///|
-/// Coarse readiness level derived from the score and remaining required items.
-pub(all) enum Readiness {
+/// Coarse launch level derived from the score and remaining required items.
+pub(all) enum LaunchState {
   Blocked
   Warming
   Ready
@@ -25,29 +25,29 @@ pub(all) enum Readiness {
 } derive(Eq, Debug)
 
 ///|
-/// A missing evidence item with a short repair action.
-pub(all) struct Finding {
-  evidence : Evidence
+/// A missing launch milestone with a short repair action.
+pub(all) struct MilestoneGap {
+  milestone : Milestone
   weight : Int
   label : String
   action : String
 } derive(Eq, Debug)
 
 ///|
-/// Audit result for one project.
-pub(all) struct Report {
+/// Launch milestone result for one project.
+pub(all) struct LaunchReport {
   name : String
   total_weight : Int
   earned_weight : Int
   score : Int
-  level : Readiness
-  missing : Array[Finding]
+  level : LaunchState
+  missing : Array[MilestoneGap]
   signature : String
 } derive(Eq, Debug)
 
 ///|
-/// Return every evidence item in the stable order used by scoring and signing.
-pub fn all_evidence() -> Array[Evidence] {
+/// Return every milestone in the stable order used by scoring and signing.
+pub fn all_milestones() -> Array[Milestone] {
   [
     MoonBitPrimary,
     PublicRepository,
@@ -58,15 +58,15 @@ pub fn all_evidence() -> Array[Evidence] {
     RunnableTests,
     BuildPasses,
     MooncakesRelease,
-    TraceableHistory,
+    CommitHistory,
     BoundedScope,
     LicenseClean,
   ]
 }
 
 ///|
-/// Human-facing label for an evidence item.
-pub fn Evidence::label(self : Evidence) -> String {
+/// Human-facing label for a launch milestone.
+pub fn Milestone::label(self : Milestone) -> String {
   match self {
     MoonBitPrimary => "MoonBit is the primary implementation language"
     PublicRepository => "public repository is reachable"
@@ -77,15 +77,15 @@ pub fn Evidence::label(self : Evidence) -> String {
     RunnableTests => "tests can be executed"
     BuildPasses => "project builds successfully"
     MooncakesRelease => "package is published to mooncakes.io"
-    TraceableHistory => "development history is traceable"
+    CommitHistory => "development commits and release notes are visible"
     BoundedScope => "feature boundary and maintenance value are clear"
     LicenseClean => "third-party code and assets are license-clean"
   }
 }
 
 ///|
-/// Repair action for a missing evidence item.
-pub fn Evidence::action(self : Evidence) -> String {
+/// Repair action for a missing launch milestone.
+pub fn Milestone::action(self : Milestone) -> String {
   match self {
     MoonBitPrimary =>
       "move core logic into .mbt files and keep non-MoonBit glue minimal"
@@ -103,7 +103,7 @@ pub fn Evidence::action(self : Evidence) -> String {
     BuildPasses => "make `moon build` pass on a clean checkout"
     MooncakesRelease =>
       "run `moon login`, update the module namespace, then `moon publish`"
-    TraceableHistory =>
+    CommitHistory =>
       "keep small Git commits, issues, changelog entries, and release tags"
     BoundedScope => "document non-goals and future maintenance lanes"
     LicenseClean => "record dependency and asset licenses before release"
@@ -111,8 +111,8 @@ pub fn Evidence::action(self : Evidence) -> String {
 }
 
 ///|
-/// Weight assigned to each evidence item. The catalog totals 100.
-pub fn Evidence::weight(self : Evidence) -> Int {
+/// Weight assigned to each launch milestone. The catalog totals 100.
+pub fn Milestone::weight(self : Milestone) -> Int {
   match self {
     MoonBitPrimary => 12
     PublicRepository => 8
@@ -123,15 +123,15 @@ pub fn Evidence::weight(self : Evidence) -> Int {
     RunnableTests => 10
     BuildPasses => 12
     MooncakesRelease => 8
-    TraceableHistory => 8
+    CommitHistory => 8
     BoundedScope => 5
     LicenseClean => 6
   }
 }
 
 ///|
-/// Stable display label for a readiness level.
-pub fn Readiness::label(self : Readiness) -> String {
+/// Stable display label for a launch level.
+pub fn LaunchState::label(self : LaunchState) -> String {
   match self {
     Blocked => "Blocked"
     Warming => "Warming"
@@ -142,34 +142,34 @@ pub fn Readiness::label(self : Readiness) -> String {
 
 ///|
 /// Convenience wrapper for users who prefer a function over method syntax.
-pub fn evidence_weight(evidence : Evidence) -> Int {
-  evidence.weight()
+pub fn milestone_weight(milestone : Milestone) -> Int {
+  milestone.weight()
 }
 
 ///|
-/// Build a detailed audit report from a project name and observed evidence.
-pub fn audit(name : String, provided : Array[Evidence]) -> Report {
-  let catalog = all_evidence()
+/// Build a detailed launch milestone report from a project name and observed milestones.
+pub fn mark_launch(name : String, provided : Array[Milestone]) -> LaunchReport {
+  let catalog = all_milestones()
   let mut total = 0
   let mut earned = 0
   let missing = []
-  for evidence in catalog {
-    let weight = evidence.weight()
+  for milestone in catalog {
+    let weight = milestone.weight()
     total = total + weight
-    if provided.contains(evidence) {
+    if provided.contains(milestone) {
       earned = earned + weight
     } else {
-      missing.push(Finding::{
-        evidence,
+      missing.push(MilestoneGap::{
+        milestone,
         weight,
-        label: evidence.label(),
-        action: evidence.action(),
+        label: milestone.label(),
+        action: milestone.action(),
       })
     }
   }
   let score = if total == 0 { 0 } else { earned * 100 / total }
-  let level = readiness(score, missing.length())
-  Report::{
+  let level = launch_state(score, missing.length())
+  LaunchReport::{
     name,
     total_weight: total,
     earned_weight: earned,
@@ -181,14 +181,14 @@ pub fn audit(name : String, provided : Array[Evidence]) -> Report {
 }
 
 ///|
-/// A complete evidence set for README examples and smoke tests.
-pub fn complete_evidence() -> Array[Evidence] {
-  all_evidence()
+/// A complete milestone set for README examples and smoke tests.
+pub fn complete_milestones() -> Array[Milestone] {
+  all_milestones()
 }
 
 ///|
 /// A realistic draft project that is not ready for release yet.
-pub fn draft_evidence() -> Array[Evidence] {
+pub fn draft_milestones() -> Array[Milestone] {
   [
     MoonBitPrimary,
     CompleteReadme,
@@ -200,8 +200,8 @@ pub fn draft_evidence() -> Array[Evidence] {
 }
 
 ///|
-/// Format a report for terminal output.
-pub fn format_report(report : Report) -> String {
+/// Format a launch milestone report for terminal output.
+pub fn format_launch_report(report : LaunchReport) -> String {
   let out = StringBuilder()
   out.write_string("Lunemark report for " + report.name + "\n")
   out.write_string(
@@ -219,14 +219,14 @@ pub fn format_report(report : Report) -> String {
     out.write_string("missing: none\n")
   } else {
     out.write_string("missing:\n")
-    for finding in report.missing {
+    for gap in report.missing {
       out.write_string(
         "- [" +
-        finding.weight.to_string() +
+        gap.weight.to_string() +
         "] " +
-        finding.label +
+        gap.label +
         " -> " +
-        finding.action +
+        gap.action +
         "\n",
       )
     }
@@ -236,7 +236,7 @@ pub fn format_report(report : Report) -> String {
 
 ///|
 /// Compact one-line status for release notes or issue comments.
-pub fn badge(report : Report) -> String {
+pub fn launch_badge(report : LaunchReport) -> String {
   "Lunemark " +
   report.level.label() +
   " " +
@@ -246,7 +246,7 @@ pub fn badge(report : Report) -> String {
 }
 
 ///|
-fn readiness(score : Int, missing_count : Int) -> Readiness {
+fn launch_state(score : Int, missing_count : Int) -> LaunchState {
   if missing_count == 0 {
     Sealed
   } else if score >= 85 {
@@ -259,11 +259,11 @@ fn readiness(score : Int, missing_count : Int) -> Readiness {
 }
 
 ///|
-fn sign(provided : Array[Evidence], earned : Int, total : Int) -> String {
+fn sign(provided : Array[Milestone], earned : Int, total : Int) -> String {
   let mut mask = 0
-  for evidence in all_evidence() {
-    if provided.contains(evidence) {
-      mask = mask + pow2(evidence_index(evidence))
+  for milestone in all_milestones() {
+    if provided.contains(milestone) {
+      mask = mask + pow2(milestone_index(milestone))
     }
   }
   let token = positive_mod(mask * 97 + earned * 31 + total * 13, 46656)
@@ -271,8 +271,8 @@ fn sign(provided : Array[Evidence], earned : Int, total : Int) -> String {
 }
 
 ///|
-fn evidence_index(evidence : Evidence) -> Int {
-  match evidence {
+fn milestone_index(milestone : Milestone) -> Int {
+  match milestone {
     MoonBitPrimary => 0
     PublicRepository => 1
     CompleteReadme => 2
@@ -282,7 +282,7 @@ fn evidence_index(evidence : Evidence) -> Int {
     RunnableTests => 6
     BuildPasses => 7
     MooncakesRelease => 8
-    TraceableHistory => 9
+    CommitHistory => 9
     BoundedScope => 10
     LicenseClean => 11
   }
