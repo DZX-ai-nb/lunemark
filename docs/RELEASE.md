@@ -1,8 +1,12 @@
 # Release Checklist
 
-## 0.2.1 Planned Release
+## 0.2.1 Release
 
-Before publishing to mooncakes.io:
+Published package:
+
+- <https://mooncakes.io/docs/DZX-ai-nb/lunemark>
+
+Release checklist:
 
 1. Create or choose a public GitHub repository.
 2. Confirm `DZX-ai-nb/lunemark` in:

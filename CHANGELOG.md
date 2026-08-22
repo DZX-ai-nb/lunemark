@@ -8,6 +8,10 @@
 - README、mooncakes README 和 `docs/ORIGINALITY.md` 改为原创性星图优先表述，降低与发布材料类项目的误判风险。
 - 近邻测试负样本从文件扫描形态改为发布里程碑规划形态，保留差异化检测能力。
 
+### Published
+
+- 发布到 mooncakes.io：<https://mooncakes.io/docs/DZX-ai-nb/lunemark>
+
 ## 0.2.0 - 2026-08-20
 
 ### Changed

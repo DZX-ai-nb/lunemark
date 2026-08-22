@@ -4,6 +4,8 @@ Lunemark 是一个用 MoonBit 实现的“原创性星图”工具。它把项�
 
 当前包名是 `DZX-ai-nb/lunemark`，对应 mooncakes.io 登录账号 `DZX-ai-nb`。
 
+mooncakes.io 页面：<https://mooncakes.io/docs/DZX-ai-nb/lunemark>
+
 ## 项目用途
 
 Lunemark 解决的是“项目还没发布前如何避免选题雷同”的问题。它不扫描本地仓库文件，也不冒充全网唯一性保证；它提供一个可运行、可测试、可解释的 MoonBit 原创性模型，让 README、Issue 和 CI 日志都能清楚说明：这个项目的主功能是原创性指纹引擎，不是仓库发布清单工具。
@@ -162,7 +164,11 @@ GitHub Actions 工作流位于 `.github/workflows/ci.yml`，会在 push、pull r
 
 ## 发布到 mooncakes.io
 
-发布前需要你自己的 mooncakes.io 账号：
+当前版本已经发布到 mooncakes.io：
+
+- <https://mooncakes.io/docs/DZX-ai-nb/lunemark>
+
+再次发布新版本时：
 
 1. 确认 `moon.mod` 中的 `name` 为 `DZX-ai-nb/lunemark`
 2. 确认 `repository` 为公开仓库地址
