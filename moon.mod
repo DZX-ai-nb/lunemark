@@ -1,13 +1,13 @@
 // Learn more about moon.mod configuration:
 // https://docs.moonbitlang.com/en/latest/toolchain/moon/module.html
 
-name = "username/lunemark"
+name = "DZX-ai-nb/lunemark"
 
 version = "0.2.1"
 
 readme = "README.mbt.md"
 
-repository = "https://github.com/your-name/lunemark"
+repository = "https://github.com/DZX-ai-nb/lunemark"
 
 license = "Apache-2.0"
 

@@ -5,12 +5,12 @@
 Before publishing to mooncakes.io:
 
 1. Create or choose a public GitHub repository.
-2. Replace `username/lunemark` in:
+2. Confirm `DZX-ai-nb/lunemark` in:
    - `moon.mod`
    - `cmd/main/moon.pkg`
    - `examples/partial/moon.pkg`
-   - README snippets if desired
-3. Replace `repository` in `moon.mod` with the public repository URL.
+   - README snippets
+3. Confirm `repository` in `moon.mod` points to the public repository URL.
 4. Run local verification:
 
 ```sh

@@ -2,7 +2,7 @@
 
 Lunemark 是一个用 MoonBit 实现的“原创性星图”工具。它把项目选题编码成多维功能指纹，和内置原型库做近邻比较，输出原创性分数、防撞签名、差异化建议和后续维护路线。发布里程碑能力保留为辅助视图：先看选题是否撞车，再看发布前的工程状态。
 
-当前包名是 `username/lunemark`。发布到 mooncakes.io 前，请把 `moon.mod` 和示例包里的 `username` 替换成你的 mooncakes.io 用户名。
+当前包名是 `DZX-ai-nb/lunemark`，对应 mooncakes.io 登录账号 `DZX-ai-nb`。
 
 ## 项目用途
 
@@ -92,7 +92,7 @@ Originality 81% ORBT-81-5rz
 
 ```text
 import {
-  "username/lunemark" @lunemark,
+  "DZX-ai-nb/lunemark" @lunemark,
 }
 
 pkgtype(kind: "executable")
@@ -164,14 +164,13 @@ GitHub Actions 工作流位于 `.github/workflows/ci.yml`，会在 push、pull r
 
 发布前需要你自己的 mooncakes.io 账号：
 
-1. 修改 `moon.mod` 中的 `name` 为 `<你的用户名>/lunemark`
-2. 修改 `repository` 为公开仓库地址
-3. 同步修改 `cmd/main/moon.pkg` 和 `examples/partial/moon.pkg` 的 import 路径
-4. 执行 `moon login`
-5. 执行 `moon check --deny-warn && moon test && moon build`
-6. 执行 `moon publish`
-7. 创建 Git tag，例如 `v0.2.1`
-8. 在 `CHANGELOG.md` 写入发布记录
+1. 确认 `moon.mod` 中的 `name` 为 `DZX-ai-nb/lunemark`
+2. 确认 `repository` 为公开仓库地址
+3. 执行 `moon login`
+4. 执行 `moon check --deny-warn && moon test && moon build`
+5. 执行 `moon publish`
+6. 创建 Git tag，例如 `v0.2.1`
+7. 在 `CHANGELOG.md` 写入发布记录
 
 详细清单见 `docs/RELEASE.md`。
 

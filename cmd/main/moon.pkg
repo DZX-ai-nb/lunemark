@@ -1,5 +1,5 @@
 import {
-  "username/lunemark",
+  "DZX-ai-nb/lunemark",
 }
 
 pkgtype(kind: "executable")
