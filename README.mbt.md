@@ -4,7 +4,7 @@ Lunemark 是一个用 MoonBit 实现的月相感知规划窗口评分器。它�
 
 当前包名：`DZX-ai-nb/lunemark`  
 GitHub 仓库：<https://github.com/DZX-ai-nb/lunemark>  
-mooncakes.io：<https://mooncakes.io/docs/DZX-ai-nb/lunemark>
+mooncakes.io：<https://mooncakes.io/docs/DZX-ai-nb/lunemark@0.3.0>
 
 ## 项目用途
 

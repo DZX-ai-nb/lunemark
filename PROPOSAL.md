@@ -7,7 +7,7 @@
 项目负责人：丁子玄  
 GitHub 账号：DZX-ai-nb  
 代码仓库：<https://github.com/DZX-ai-nb/lunemark>  
-mooncakes.io：<https://mooncakes.io/docs/DZX-ai-nb/lunemark>  
+mooncakes.io：<https://mooncakes.io/docs/DZX-ai-nb/lunemark@0.3.0>  
 开源许可证：Apache-2.0
 
 ## 针对初审反馈的修改

@@ -10,7 +10,7 @@ Lunemark Phase Window Scorer
 
 ## mooncakes.io
 
-<https://mooncakes.io/docs/DZX-ai-nb/lunemark>
+<https://mooncakes.io/docs/DZX-ai-nb/lunemark@0.3.0>
 
 ## One-Line Description
 
