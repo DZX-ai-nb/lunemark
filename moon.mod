@@ -3,7 +3,7 @@
 
 name = "DZX-ai-nb/lunemark"
 
-version = "0.2.1"
+version = "0.3.0"
 
 readme = "README.mbt.md"
 
@@ -11,14 +11,8 @@ repository = "https://github.com/DZX-ai-nb/lunemark"
 
 license = "Apache-2.0"
 
-keywords = [
-  "hackathon",
-  "originality",
-  "fingerprint",
-  "mooncakes",
-  "anti-collision",
-]
+keywords = [ "lunar", "window-scoring", "moon-phase", "icalendar", "planning" ]
 
 preferred_target = "wasm"
 
-description = "A MoonBit originality atlas that fingerprints project ideas, detects nearby archetypes, and generates anti-collision signatures before release."
+description = "A deterministic MoonBit phase-aware planning window scorer for lunar rhythm signals, rule scoring, best-window selection, and iCalendar export."

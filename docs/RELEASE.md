@@ -1,61 +1,35 @@
 # Release Checklist
 
-## 0.2.1 Release
+## 0.3.0 Resubmission Release
 
-Published package:
+Before resubmitting the form:
 
-- <https://mooncakes.io/docs/DZX-ai-nb/lunemark>
-
-Release checklist:
-
-1. Create or choose a public GitHub repository.
-2. Confirm `DZX-ai-nb/lunemark` in:
-   - `moon.mod`
-   - `cmd/main/moon.pkg`
-   - `examples/partial/moon.pkg`
-   - README snippets
-3. Confirm `repository` in `moon.mod` points to the public repository URL.
-4. Run local verification:
+1. Push this 0.3.0 code to the public GitHub repository.
+2. Confirm the default branch shows the new README title `Lunemark`.
+3. Run local verification:
 
 ```sh
 moon fmt --check
 moon check --deny-warn
 moon build
-moon test
+moon test --deny-warn
 moon run cmd/main
 moon run examples/partial
 ```
 
-5. Commit all changes.
-6. Push to the public repository.
-7. Confirm GitHub Actions passes.
-8. Log in locally:
+4. Confirm `moon version --all` reports `moonc >= v0.10.9`.
+5. Confirm GitHub Actions passes.
+6. Publish the new package version:
 
 ```sh
 moon login
-```
-
-9. Publish:
-
-```sh
 moon publish
 ```
 
-10. Create and push the version tag:
+7. Confirm mooncakes.io shows version `0.3.0` and the phase-aware planning window scorer description.
+8. Use `PROPOSAL.md` as the one-page Markdown project proposal in the resubmission form.
 
-```sh
-git tag v0.2.1
-git push origin v0.2.1
-```
+## Links
 
-11. Add the mooncakes.io package URL to the README after publication.
-
-## Artifact Links
-
-Keep these links for the final project showcase:
-
-- Public repository URL
-- GitHub Actions run URL
-- mooncakes.io package URL
-- Git tag URL
-- Issue or PR links used during development
+- GitHub: <https://github.com/DZX-ai-nb/lunemark>
+- mooncakes.io: <https://mooncakes.io/docs/DZX-ai-nb/lunemark>

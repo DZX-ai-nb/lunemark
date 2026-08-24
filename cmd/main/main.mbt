@@ -1,16 +1,19 @@
 ///|
-/// Runnable Lunemark CLI example.
+/// Runnable Lunemark lunar rhythm example.
 fn main {
-  let originality = @lunemark.analyze_originality(@lunemark.lunemark_profile())
-  println(@lunemark.format_originality_report(originality))
-  let draft = @lunemark.mark_launch(
-    "lunemark-draft",
-    @lunemark.draft_milestones(),
+  let today = @lunemark.date(2026, 8, 24)
+  let report = @lunemark.analyze_day(today, @lunemark.NightSky)
+  println(@lunemark.format_day_report(report))
+  let best = @lunemark.best_windows(today, 14, @lunemark.NightSky, 3)
+  for item in best {
+    println(@lunemark.rhythm_badge(item))
+  }
+  println(
+    @lunemark.export_ics(
+      "Event timing window",
+      today,
+      20,
+      @lunemark.EventTiming,
+    ),
   )
-  println(@lunemark.format_launch_report(draft))
-  let release_report = @lunemark.mark_launch(
-    "lunemark-release",
-    @lunemark.complete_milestones(),
-  )
-  println(@lunemark.launch_badge(release_report))
 }

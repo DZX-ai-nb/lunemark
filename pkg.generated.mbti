@@ -1,0 +1,102 @@
+// Generated using `moon info`, DON'T EDIT IT
+package "DZX-ai-nb/lunemark"
+
+import {
+  "moonbitlang/core/debug",
+}
+
+// Values
+pub fn analyze_day(CivilDate, RhythmLane) -> DayRhythm
+
+pub fn analyze_span(CivilDate, Int, RhythmLane) -> Array[DayRhythm]
+
+pub fn best_windows(CivilDate, Int, RhythmLane, Int) -> Array[DayRhythm]
+
+pub fn compact_date(CivilDate) -> String
+
+pub fn date(Int, Int, Int) -> CivilDate
+
+pub fn days_in_month(Int, Int) -> Int
+
+pub fn export_ics(String, CivilDate, Int, RhythmLane) -> String
+
+pub fn export_ics_with_threshold(String, CivilDate, Int, RhythmLane, Int) -> String
+
+pub fn format_date(CivilDate) -> String
+
+pub fn format_day_report(DayRhythm) -> String
+
+pub fn illumination_on(CivilDate) -> Int
+
+pub fn is_high_window(DayRhythm) -> Bool
+
+pub fn is_leap_year(Int) -> Bool
+
+pub fn is_valid_date(CivilDate) -> Bool
+
+pub fn lunar_day_on(CivilDate) -> Int
+
+pub fn matching_rules(CivilDate, MoonPhase, RhythmLane) -> Array[RhythmRule]
+
+pub fn phase_on(CivilDate) -> MoonPhase
+
+pub fn rhythm_badge(DayRhythm) -> String
+
+pub fn rhythm_rule_catalog() -> Array[RhythmRule]
+
+// Errors
+
+// Types and methods
+pub(all) struct CivilDate {
+  year : Int
+  month : Int
+  day : Int
+} derive(Eq, @debug.Debug)
+
+pub(all) struct DayRhythm {
+  date : CivilDate
+  phase : MoonPhase
+  lunar_day : Int
+  illumination : Int
+  lane : RhythmLane
+  score : Int
+  tide_bias : String
+  advice : Array[String]
+  rules : Array[RhythmRule]
+  signature : String
+} derive(Eq, @debug.Debug)
+
+pub(all) enum MoonPhase {
+  NewMoon
+  WaxingCrescent
+  FirstQuarter
+  WaxingGibbous
+  FullMoon
+  WaningGibbous
+  LastQuarter
+  WaningCrescent
+} derive(Eq, @debug.Debug)
+pub fn MoonPhase::label(Self) -> String
+
+pub(all) enum RhythmLane {
+  NightSky
+  TideWatch
+  GardenPlanning
+  DeepWork
+  WellnessRest
+  EventTiming
+} derive(Eq, @debug.Debug)
+pub fn RhythmLane::label(Self) -> String
+
+pub(all) struct RhythmRule {
+  id : String
+  month : Int
+  phase : MoonPhase
+  lane : RhythmLane
+  weight : Int
+  label : String
+} derive(Eq, @debug.Debug)
+
+// Type aliases
+
+// Traits

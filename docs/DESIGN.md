@@ -1,103 +1,27 @@
-# Lunemark Design
+# Design Notes
 
-## 目标
+## Purpose
 
-Lunemark 的目标是提供一个 MoonBit 选题原创性星图。它先把项目想法编码成多维功能指纹，再和内置原型库做近邻比较，输出原创性分数、防撞签名和改题建议。发布里程碑模型仍然保留，但作为辅助视图，而不是主功能。
+Lunemark provides a small deterministic phase-aware planning window scorer for MoonBit projects. It is designed for tools that need a repeatable lunar rhythm signal without a network service, a full Chinese-calendar library, or a recurrence-rule scheduler.
 
-## 数据模型
+## Data Model
 
-发布里程碑类型位于 `lunemark.mbt`：
+- `CivilDate` stores a Gregorian date.
+- `MoonPhase` represents eight coarse lunar phases.
+- `RhythmLane` represents practical planning scenarios.
+- `RhythmRule` stores a month, phase, lane, weight, and label.
+- `DayRhythm` is the final analysis result for one date and one lane.
 
-- `Milestone`：12 个发布里程碑项。
-- `LaunchState`：`Blocked`、`Warming`、`Ready`、`Sealed`。
-- `MilestoneGap`：缺失里程碑、权重、标签和修复动作。
-- `LaunchReport`：总分、已得分、百分比分、状态、缺口和签名。
+## Algorithm
 
-原创性类型位于 `lunemark_originality.mbt`：
+The engine converts a Gregorian date to Julian Day Number using integer arithmetic. It then measures the offset from a fixed new-moon anchor and folds the result into a 29.53-day synodic month represented in thousandths of a day. That cycle value yields a phase, lunar day, and approximate illumination percentage.
 
-- `IdeaProfile`：项目选题的 12 轴功能指纹。
-- `Archetype`：一个内置原型库条目。
-- `SimilarityHit`：最近邻匹配结果。
-- `OriginalityReport`：原创性分数、最近原型、差异化建议、改题提示和 `ORBT-*` 签名。
+The lane score starts from a phase-specific base score. `matching_rules` traverses the 576-rule catalog and keeps rules matching the date month, Moon phase, and planning lane. `catalog_score` adds those weights to the base score, and the result is clamped to 0-100.
 
-原型库位于 `lunemark_catalog.mbt`，当前包含 281 个条目。`closest_archetypes` 会遍历整个原型库、计算距离、排序并截取前 N 个结果。
+## Outputs
 
-## 原创性算法
+The public API exposes date validation, lightweight phase helpers, terminal reports, compact badges, best-window sorting, default-threshold iCalendar text, and custom-threshold iCalendar text. The ICS output is intentionally simple so it can be consumed by tests, examples, or downstream adapters.
 
-每个选题和原型都有 12 个 1~10 的轴：
+## Boundaries
 
-- namespace
-- runtime
-- docs
-- ci
-- release
-- originality
-- maintenance
-- data
-- interactive
-- security
-- portability
-- community
-
-距离是 12 轴绝对差之和。相似度使用严格近重复阈值：
-
-```text
-similarity = clamp(100 - distance * 100 / 25, 0, 100)
-```
-
-这个阈值故意偏严格：只有非常接近的向量才被视为撞题风险，宽泛领域相邻只作为差异化参考。
-
-Lunemark 0.2.0 自查结果：
-
-- novelty: 81/100
-- signature: `ORBT-81-5rz`
-- nearest internal archetype: 28%
-
-## 权重设计
-
-总权重固定为 100，方便在 README、Issue 和 CI 中直接读取结果。
-
-| Milestone | Weight |
-| --- | ---: |
-| `MoonBitPrimary` | 12 |
-| `PublicRepository` | 8 |
-| `CompleteReadme` | 10 |
-| `PurposeAndUsage` | 3 |
-| `RunnableExample` | 8 |
-| `ContinuousIntegration` | 10 |
-| `RunnableTests` | 10 |
-| `BuildPasses` | 12 |
-| `MooncakesRelease` | 8 |
-| `CommitHistory` | 8 |
-| `BoundedScope` | 5 |
-| `LicenseClean` | 6 |
-
-## 状态规则
-
-- `Sealed`：没有缺失项。
-- `Ready`：仍有缺失项，但分数不低于 85。
-- `Warming`：分数不低于 60。
-- `Blocked`：分数低于 60。
-
-这个规则故意保守：只要还有缺失项，就不会返回 `Sealed`。
-
-## 签名规则
-
-签名格式为 `LMK-<earned>-<token>`。`token` 来自里程碑位图、已得分和总分的确定性组合。同一组里程碑不受输入顺序或重复项影响，会得到相同签名。
-
-## 非目标
-
-- 不做自动仓库扫描。
-- 不直接调用 mooncakes.io。
-- 不管理登录凭证。
-- 不解析 GitHub Actions 日志。
-- 不提供法律层面的许可证结论。
-
-## 可维护扩展
-
-后续可以添加以下包或模块：
-
-- `index/mooncakes`：公开包索引导入。
-- `index/github`：公开项目摘要导入。
-- `atlas`：更细的原型分类和聚类导出。
-- `json`：机器可读报告输出。
+The calculation is a software planning approximation. It does not replace professional ephemerides, local tide tables, weather forecasts, agriculture advice, or legal/operational review tools.

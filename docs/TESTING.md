@@ -1,16 +1,8 @@
 # Testing Record
 
-## Environment
-
-- Date: 2026-08-21
-- OS: Windows
-- Toolchain: `moon 0.1.20260803`
-- Compiler: `moonc v0.10.6+80dc50f24`
-
-## Commands
+## Local Commands
 
 ```sh
-moon fmt
 moon fmt --check
 moon check --deny-warn
 moon build
@@ -19,24 +11,21 @@ moon run cmd/main
 moon run examples/partial
 ```
 
-## Results
-
-- `moon test`: 8 tests, 8 passed, 0 failed.
-- `moon run cmd/main`: printed originality atlas report, draft launch milestone report, and sealed release badge.
-- `moon run examples/partial`: printed compact launch milestone badge and originality badge.
-- Effective MoonBit source scale: 5980 non-empty, non-comment lines after the originality atlas expansion.
-
 ## Covered Cases
 
-- Originality atlas returns five ranked nearest hits.
-- Known release planner shape is detected as a 100% close match.
-- Public originality API exposes an `ORBT-*` anti-collision badge.
-- Complete milestones reach 100 and `Sealed`.
-- Draft milestones report 48 and missing release work.
-- Duplicate milestones do not inflate the score.
-- Badge format contains level, score, and signature.
-- Public API is usable from blackbox tests through `@lunemark`.
+- Public API formats a lunar rhythm report.
+- Public API exports iCalendar text.
+- Public API validates leap years and invalid dates.
+- Public phase helpers match day analysis.
+- Known new-moon anchor remains stable.
+- Span analysis preserves requested length.
+- Best windows are sorted by score.
+- Rule catalog contains 500+ real data entries.
+- Matching rules are reflected in day analysis.
+- Compact badge includes phase, score, and `LNR-*` signature.
+- Custom ICS threshold filters events.
+- High-window predicate follows the default export threshold.
 
-## Manual Notes
+## Manual Review Notes
 
-The project has no third-party runtime dependencies. CI repeats the same verification steps on Ubuntu after a public repository is pushed.
+The project has no third-party runtime dependencies. The generated rule catalog is project-owned deterministic data and is used by the scoring pipeline. The latest local verification used `moonc v0.10.10`, satisfying the announcement requirement of `>= v0.10.9`.

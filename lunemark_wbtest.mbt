@@ -1,73 +1,71 @@
 ///|
-test "complete milestones seal the report" {
-  let report = mark_launch("complete", complete_milestones())
-  assert_true(report.score == 100)
-  assert_true(report.earned_weight == 100)
-  assert_true(report.level == Sealed)
-  assert_true(report.missing.length() == 0)
-  assert_true(report.signature.contains("LMK-100-"))
+test "known new moon anchor stays stable" {
+  let report = analyze_day(date(2000, 1, 6), NightSky)
+  assert_true(report.phase == NewMoon)
+  assert_true(report.illumination <= 3)
+  assert_true(report.signature.contains("LNR-"))
 }
 
 ///|
-test "draft milestones list missing release work" {
-  let report = mark_launch("draft", draft_milestones())
-  assert_true(report.score == 48)
-  assert_true(report.level == Blocked)
-  assert_true(report.missing.length() == 6)
-  assert_true(
-    format_launch_report(report).contains("CI workflow is configured"),
+test "span analysis preserves requested length" {
+  let items = analyze_span(date(2026, 8, 24), 12, TideWatch)
+  assert_true(items.length() == 12)
+  assert_true(items[0].date == date(2026, 8, 24))
+}
+
+///|
+test "best windows are sorted by score" {
+  let items = best_windows(date(2026, 8, 24), 30, NightSky, 5)
+  assert_true(items.length() == 5)
+  assert_true(items[0].score >= items[1].score)
+  assert_true(items[1].score >= items[2].score)
+}
+
+///|
+test "rule catalog is real project data" {
+  let rules = rhythm_rule_catalog()
+  assert_true(rules.length() >= 500)
+  assert_true(rules[0].id == "LR-000")
+  assert_true(rules[0].label.contains("night sky"))
+}
+
+///|
+test "matching rules are used by day analysis" {
+  let report = analyze_day(date(2000, 1, 6), NightSky)
+  let rules = matching_rules(report.date, report.phase, report.lane)
+  assert_true(report.rules.length() == rules.length())
+}
+
+///|
+test "compact badge carries phase score and signature" {
+  let report = analyze_day(date(2026, 9, 7), DeepWork)
+  let badge = rhythm_badge(report)
+  assert_true(badge.contains("Lunemark"))
+  assert_true(badge.contains("LNR-"))
+}
+
+///|
+test "custom ics threshold filters events" {
+  let low = export_ics_with_threshold(
+    "low threshold",
+    date(2026, 8, 24),
+    3,
+    EventTiming,
+    0,
   )
-  assert_true(
-    format_launch_report(report).contains(
-      "package is published to mooncakes.io",
-    ),
+  let high = export_ics_with_threshold(
+    "high threshold",
+    date(2026, 8, 24),
+    3,
+    EventTiming,
+    100,
   )
+  assert_true(low.contains("BEGIN:VEVENT"))
+  assert_true(high.contains("BEGIN:VEVENT") == false)
 }
 
 ///|
-test "duplicate milestones do not inflate score" {
-  let report = mark_launch("duplicate", [MoonBitPrimary, MoonBitPrimary])
-  assert_true(report.earned_weight == milestone_weight(MoonBitPrimary))
-  assert_true(report.score == 12)
-}
-
-///|
-test "badge is compact and deterministic" {
-  let report = mark_launch("complete", complete_milestones())
-  assert_true(launch_badge(report).contains("Lunemark Sealed 100% LMK-100-"))
-}
-
-///|
-test "originality atlas returns ranked hits and signature" {
-  let report = analyze_originality(lunemark_profile())
-  assert_true(report.closest.length() == 5)
-  assert_true(report.novelty_score > 0)
-  assert_true(report.anti_collision_signature.contains("ORBT-"))
-  assert_true(format_originality_report(report).contains("closest archetypes"))
-}
-
-///|
-test "known release planner shape is detected as close" {
-  let profile = IdeaProfile::{
-    name: "release planner",
-    thesis: "summarize MoonBit project launch routes",
-    audience: "release-curators",
-    mechanism: "milestone-route-modeling",
-    axis_namespace: 4,
-    axis_runtime: 2,
-    axis_docs: 7,
-    axis_ci: 8,
-    axis_release: 7,
-    axis_originality: 3,
-    axis_maintenance: 5,
-    axis_data: 2,
-    axis_interactive: 1,
-    axis_security: 4,
-    axis_portability: 4,
-    axis_community: 3,
-  }
-  let closest = closest_archetypes(profile, 1)
-  assert_true(closest.length() == 1)
-  assert_true(closest[0].id == "ARCH-000")
-  assert_true(closest[0].similarity == 100)
+test "high window predicate follows default threshold" {
+  let report = analyze_day(date(2026, 9, 7), DeepWork)
+  assert_true(is_high_window(report) == (report.score >= 70))
 }

@@ -19,7 +19,17 @@ jobs:
           echo "$HOME/.moon/bin" >> "$GITHUB_PATH"
 
       - name: Show toolchain
-        run: moon version
+        run: moon version --all
+
+      - name: Enforce MoonBit compiler version
+        run: |
+          required="0.10.9"
+          actual="$(moon version --all | awk '/^moonc / {print $2}' | sed 's/^v//' | cut -d+ -f1)"
+          echo "required moonc >= ${required}, actual ${actual}"
+          if [ "$(printf '%s\n' "$required" "$actual" | sort -V | head -n1)" != "$required" ]; then
+            echo "moonc is too old"
+            exit 1
+          fi
 
       - name: Format check
         run: moon fmt --check
@@ -31,7 +41,10 @@ jobs:
         run: moon build
 
       - name: Test
-        run: moon test
+        run: moon test --deny-warn
+
+      - name: Interface info
+        run: moon info
 
       - name: Run main example
         run: moon run cmd/main

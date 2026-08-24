@@ -1,6 +1,6 @@
 ---
 name: Bug report
-about: Report incorrect scoring, formatting, or signing behavior
+about: Report incorrect phase, scoring, formatting, or calendar output
 title: "[bug] "
 labels: bug
 assignees: ""
@@ -12,7 +12,7 @@ Describe the unexpected behavior.
 
 ## Expected Behavior
 
-Describe the expected score, missing list, level, or signature.
+Describe the expected date, phase, score, badge, or ICS output.
 
 ## Reproduction
 
@@ -23,4 +23,4 @@ moon run cmd/main
 
 ## Notes
 
-Add MoonBit version and any relevant milestone list.
+Add MoonBit version, input date, lane, and any relevant rule ID.

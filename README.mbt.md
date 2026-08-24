@@ -1,54 +1,39 @@
 # Lunemark
 
-Lunemark 是一个用 MoonBit 实现的“原创性星图”工具。它把项目选题编码成多维功能指纹，和内置原型库做近邻比较，输出原创性分数、防撞签名、差异化建议和后续维护路线。发布里程碑能力保留为辅助视图：先看选题是否撞车，再看发布前的工程状态。
+Lunemark 是一个用 MoonBit 实现的月相感知规划窗口评分器。它把公历日期转换为粗粒度月相、月龄、照明比例和场景化窗口分数，并能生成终端报告、紧凑 badge、最佳日期列表和 iCalendar 文本。
 
-当前包名是 `DZX-ai-nb/lunemark`，对应 mooncakes.io 登录账号 `DZX-ai-nb`。
-
-mooncakes.io 页面：<https://mooncakes.io/docs/DZX-ai-nb/lunemark>
+当前包名：`DZX-ai-nb/lunemark`  
+GitHub 仓库：<https://github.com/DZX-ai-nb/lunemark>  
+mooncakes.io：<https://mooncakes.io/docs/DZX-ai-nb/lunemark>
 
 ## 项目用途
 
-Lunemark 解决的是“项目还没发布前如何避免选题雷同”的问题。它不扫描本地仓库文件，也不冒充全网唯一性保证；它提供一个可运行、可测试、可解释的 MoonBit 原创性模型，让 README、Issue 和 CI 日志都能清楚说明：这个项目的主功能是原创性指纹引擎，不是仓库发布清单工具。
+Lunemark 面向需要稳定日期节律信号的 MoonBit 应用：天文观测计划、潮汐提醒前置筛选、园艺安排、活动日期选择、低干扰深度工作窗口和轻量个人日历工具。项目不调用外部网络服务，所有结果都由 MoonBit 代码和内置规则目录确定性生成，适合在 CI、示例项目和 Wasm 环境中复现。
 
-## 公开选题排查
+## 公开相邻项目排查
 
-公开检索和评审反馈截图都提示，MoonBit 生态里已有多类围绕发布材料、README 示例、授权说明、边界说明和最终展示记录的项目。旧版 Lunemark 的“里程碑打分器”容易被放进同一类，因此 0.2.0 做了功能转向：
-
-- 主功能改为 `IdeaProfile` 多轴选题指纹。
-- 新增 281 个内置 `Archetype` 原型。
-- 新增 `closest_archetypes` 最近邻比较。
-- 新增 `analyze_originality` 原创性报告。
-- 新增 `ORBT-*` 防撞签名和改题提示。
-
-完整排查记录见 `docs/ORIGINALITY.md`。
+公开检索发现 `tyme4mb` 已覆盖中国传统历法、农历、节气、八字、宜忌和月相等大型历法能力；`moon-schedule` 已覆盖 Cron 与 RFC 5545 RRULE 的确定性日程规则。Lunemark 不重复这些方向：它不做农历/节气/八字，也不实现 Cron/RRULE 复发规则；它的核心是把粗粒度月相信号、月份和使用场景输入到 576 条规则目录，输出可排序的规划窗口分数和轻量 ICS 事件文本。
 
 ## 主要功能
 
-- 原创性 API：`lunemark_profile`、`analyze_originality`、`closest_archetypes`、`format_originality_report`
-- 原型库：`archetype_catalog` 内置 281 个项目功能原型
-- 防撞签名：相同选题指纹会生成稳定 `ORBT-...` 短码
-- 差异化建议：输出 closest archetypes、differentiators 和 rewrite prompt
-- 发布里程碑 API：`mark_launch`、`format_launch_report`、`launch_badge`
-- CLI 示例：`moon run cmd/main`
-- 可运行示例包：`moon run examples/partial`
-- 测试覆盖：原创性分析、近重复检测、完整里程碑、草稿里程碑、重复里程碑、badge 输出
-- CI 配置：格式检查、静态检查、构建、测试、示例运行
+- 公历日期建模：`date`、`format_date`、`compact_date`
+- 日期边界：`is_valid_date`、`is_leap_year`、`days_in_month`
+- 月相估算：`NewMoon`、`FirstQuarter`、`FullMoon` 等 8 个阶段
+- 轻量查询：`phase_on`、`lunar_day_on`、`illumination_on`
+- 节律评分：按 `NightSky`、`TideWatch`、`GardenPlanning`、`DeepWork`、`WellnessRest`、`EventTiming` 六类规划场景计算窗口分
+- 规则目录：`rhythm_rule_catalog` 提供 576 条月份、月相和场景规则，并在 `matching_rules` / `analyze_day` 中实际参与评分
+- 日期窗口：`analyze_span` 和 `best_windows` 可对一段日期排序筛选
+- 文本输出：`format_day_report`、`rhythm_badge`
+- 日历导出：`export_ics` 和 `export_ics_with_threshold` 输出简洁 iCalendar 文本
+- 测试覆盖：月相锚点、跨度分析、最佳窗口排序、规则目录、报告格式和 ICS 导出
 
 ## 功能边界
 
-Lunemark 专注于“选题原创性防撞 + 发布里程碑辅助”，不做以下事情：
-
-- 不自动扫描本地仓库。
-- 不保存 mooncakes.io token。
-- 不替你发布包。
-- 不声称能发现私有仓库、未发布项目或未来项目。
-- 不替代法律层面的许可证判断。
-
-后续维护可以在这个边界上扩展，例如增加 mooncakes.io 公开包索引导入器、GitHub 搜索适配器、JSON 报告输出或更细的原型分类器。
+Lunemark 是月相感知规划窗口评分器，不处理报名材料、仓库质量、项目相似度或法律层面的许可证结论。月相计算采用适合软件规划的整数近似模型，不替代专业天文历书；潮汐和园艺建议只作为可重复的计划信号，实际使用时应结合地点、天气和专业数据。
 
 ## 快速开始
 
-需要 MoonBit 工具链。当前项目已用 `moon 0.1.20260803` 和 `moonc v0.10.6+80dc50f24` 验证。
+需要 MoonBit 工具链。
 
 ```sh
 moon fmt --check
@@ -59,38 +44,21 @@ moon run cmd/main
 moon run examples/partial
 ```
 
-主示例输出节选：
+当前补救版已用 `moonc v0.10.10` 验证，满足群公告提出的 `>= v0.10.9` 要求。
+
+主示例会输出某一天的月相节律报告、未来两周的最佳观测窗口和 iCalendar 文本：
 
 ```text
-Lunemark originality atlas for Lunemark Originality Atlas
-novelty: 81/100
-signature: ORBT-81-5rz
-mechanism: multi-axis idea fingerprint plus built-in archetype atlas
-closest archetypes:
-- ARCH-262 data-codec archetype 262 (28%) -> nearest numeric fingerprint
-- ARCH-054 data-codec archetype 054 (24%) -> nearest numeric fingerprint
-- ARCH-062 config-safety archetype 062 (24%) -> close originality and data axes
-- ARCH-073 community-ops archetype 073 (24%) -> close originality and data axes
-- ARCH-071 security-lens archetype 071 (20%) -> nearest numeric fingerprint
-differentiators:
-- lead with originality analysis and the atlas data model
-- use the built-in archetype atlas as a reusable MoonBit data engine
-- keep anti-collision scoring as the core value proposition
-- ship maintenance routes and future lanes with every report
-- treat the catalog as versioned project intelligence, not decoration
-rewrite prompt: preserve Lunemark Originality Atlas as an originality-first MoonBit planning kernel with launch milestones as a secondary output
-```
-
-库示例输出：
-
-```text
-Lunemark Blocked 48% LMK-48-8nv
-Originality 81% ORBT-81-5rz
+Lunemark lunar rhythm for 2026-08-24
+phase: ...
+lane: night-sky observation
+score: .../100
+signature: LNR-...
 ```
 
 ## 使用方法
 
-在另一个 MoonBit 可执行包中导入根库：
+在另一个 MoonBit 可执行包中导入：
 
 ```text
 import {
@@ -100,60 +68,58 @@ import {
 pkgtype(kind: "executable")
 ```
 
-原创性分析：
+分析单日：
 
 ```text
-let idea = @lunemark.lunemark_profile()
-let originality = @lunemark.analyze_originality(idea)
-println(@lunemark.originality_badge(originality))
+let day = @lunemark.date(2026, 9, 7)
+let report = @lunemark.analyze_day(day, @lunemark.DeepWork)
+println(@lunemark.rhythm_badge(report))
 ```
 
-发布里程碑辅助：
+单独查询月相信号：
 
 ```text
-let milestones = [
-  @lunemark.MoonBitPrimary,
-  @lunemark.PublicRepository,
-  @lunemark.CompleteReadme,
-  @lunemark.RunnableExample,
-  @lunemark.RunnableTests,
-]
-let report = @lunemark.mark_launch("tiny-orbit", milestones)
-println(@lunemark.launch_badge(report))
+let phase = @lunemark.phase_on(day)
+let light = @lunemark.illumination_on(day)
+println(phase.label() + " " + light.to_string())
 ```
 
-## 发布里程碑映射
+筛选最佳窗口：
 
-| 黑客松要求 | Lunemark 里程碑项 |
-| --- | --- |
-| 以 MoonBit 作为主要实现语言 | `MoonBitPrimary` |
-| 代码仓库公开且可以正常访问 | `PublicRepository` |
-| 提供清晰、完整的 README | `CompleteReadme` |
-| 说明项目用途、主要功能及使用方法 | `PurposeAndUsage` |
-| 提供可以实际运行的示例 | `RunnableExample` |
-| 配置持续集成 CI | `ContinuousIntegration` |
-| 提供可运行的测试 | `RunnableTests` |
-| 项目能够正常构建 | `BuildPasses` |
-| 按要求发布至 mooncakes.io | `MooncakesRelease` |
-| 开发过程和 Git 历史清晰 | `CommitHistory` |
-| 项目具有明确功能边界和后续维护价值 | `BoundedScope` |
-| 第三方代码、素材和依赖符合开源许可证要求 | `LicenseClean` |
+```text
+let windows = @lunemark.best_windows(day, 14, @lunemark.NightSky, 3)
+for item in windows {
+  println(@lunemark.format_date(item.date) + " " + item.phase.label())
+}
+```
+
+导出 iCalendar：
+
+```text
+let ics = @lunemark.export_ics("Night sky window", day, 30, @lunemark.NightSky)
+println(ics)
+```
+
+使用自定义阈值导出：
+
+```text
+let ics = @lunemark.export_ics_with_threshold(
+  "Event timing window",
+  day,
+  30,
+  @lunemark.EventTiming,
+  80,
+)
+println(ics)
+```
 
 ## 代码规模
 
-当前 MoonBit 源码已经扩展到 4k+ 有效代码行。`lunemark_catalog.mbt` 的原型库被 `closest_archetypes` 实际遍历和排序，不是空白填充。
+当前 MoonBit 源码超过 4k 有效行。`lunemark_catalog.mbt` 中的 576 条 `RhythmRule` 会被 `matching_rules` 遍历，并通过 `catalog_score` 进入最终窗口评分，不是空白填充。
 
-## 测试
+## CI 和测试
 
-```sh
-moon test
-```
-
-当前测试数量：8。测试记录见 `docs/TESTING.md`。
-
-## CI
-
-GitHub Actions 工作流位于 `.github/workflows/ci.yml`，会在 push、pull request 和手动触发时运行：
+GitHub Actions 工作流位于 `.github/workflows/ci.yml`，会运行：
 
 - `moon fmt --check`
 - `moon check --deny-warn`
@@ -162,36 +128,16 @@ GitHub Actions 工作流位于 `.github/workflows/ci.yml`，会在 push、pull r
 - `moon run cmd/main`
 - `moon run examples/partial`
 
-## 发布到 mooncakes.io
+本地测试命令：
 
-当前版本已经发布到 mooncakes.io：
+```sh
+moon test
+```
 
-- <https://mooncakes.io/docs/DZX-ai-nb/lunemark>
+## 发布
 
-再次发布新版本时：
+当前补救版版本号为 `0.3.0`。重新提交前需要在 GitHub 推送本版本，并执行 `moon publish` 让 mooncakes.io 页面同步到月相感知规划窗口评分器说明。
 
-1. 确认 `moon.mod` 中的 `name` 为 `DZX-ai-nb/lunemark`
-2. 确认 `repository` 为公开仓库地址
-3. 执行 `moon login`
-4. 执行 `moon check --deny-warn && moon test && moon build`
-5. 执行 `moon publish`
-6. 创建 Git tag，例如 `v0.2.1`
-7. 在 `CHANGELOG.md` 写入发布记录
+## 开源合规
 
-详细清单见 `docs/RELEASE.md`。
-
-## 开发记录建议
-
-本仓库已经放入以下材料，便于后续展示开发过程：
-
-- `CHANGELOG.md`：更新日志
-- `docs/ORIGINALITY.md`：公开选题排查记录和差异化说明
-- `docs/DESIGN.md`：技术方案和设计说明
-- `docs/TESTING.md`：测试记录
-- `docs/RELEASE.md`：版本发布记录和 mooncakes.io 发布步骤
-- `.github/ISSUE_TEMPLATE/`：Issue 模板
-- `.github/workflows/ci.yml`：CI 记录入口
-
-## 许可证
-
-项目代码使用 Apache-2.0。当前没有第三方运行时依赖，也没有外部素材。工具链、CI Action 和 GitHub 平台不随本包再分发。
+项目代码使用 Apache-2.0。当前没有第三方运行时代码依赖，也没有外部素材。规则目录为项目内生成的确定性测试/评分数据。

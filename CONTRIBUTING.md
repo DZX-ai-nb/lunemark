@@ -2,7 +2,7 @@
 
 ## Workflow
 
-1. Open an issue for each launch-milestone gap or behavior change.
+1. Open an issue for a phase-calculation bug, rule-catalog change, output-format change, or documentation fix.
 2. Make focused commits with testable messages.
 3. Run local checks before opening a pull request:
 
@@ -16,12 +16,12 @@ moon run examples/partial
 ```
 
 4. Update `CHANGELOG.md` for user-visible behavior changes.
-5. Update `docs/DESIGN.md` when weights, milestone order, or signing logic changes.
+5. Update `docs/DESIGN.md` when date math, phase thresholds, lane scoring, or ICS output changes.
 
 ## Commit Style
 
 Use short imperative messages, for example:
 
-- `Add release milestone scoring`
-- `Document mooncakes publish checklist`
-- `Cover duplicate milestones in tests`
+- `Add lunar rhythm scoring`
+- `Cover iCalendar export`
+- `Document phase approximation bounds`

@@ -1,6 +1,6 @@
 ---
 name: Feature request
-about: Propose a bounded Lunemark enhancement
+about: Propose a bounded Lunemark lunar calendar enhancement
 title: "[feature] "
 labels: enhancement
 assignees: ""
@@ -8,11 +8,11 @@ assignees: ""
 
 ## Problem
 
-What originality or maintenance problem should this solve?
+What calendar, phase, scoring, or export problem should this solve?
 
 ## Proposed Shape
 
-Is this a core model change, formatter change, or optional indexer?
+Is this a core date-math change, rule-catalog change, formatter change, or optional adapter?
 
 ## Non-goals
 
